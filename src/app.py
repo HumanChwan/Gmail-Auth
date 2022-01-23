@@ -1,20 +1,19 @@
 from config import config
-from typing import List
-from dict_types import MessageReadable
 from mail_utils import Email
-from utils import print_message, create_mail
 
 
 def main():
     service = config()
-    email_service = Email(service)
-    messages: List[MessageReadable] = email_service.get_mail_content(1)
-    for index, message in enumerate(messages):
-        print_message(message, index)
+    email_service = Email(service, 'dinesss169@gmail.com')
 
-    mail = create_mail('dineshchukkala169@gmail.com', 'Dinesh Chukkala <dinesss169@gmail.com>',
-                       'Test 1', "Bhai bhai Kya haal hai baaki")
-    email_service.send_mail(mail)
+    to = 'dinesss169@gmail.com'
+    subject = 'kwargs testing'
+    text = 'pls help me!'
+    html = '<strong style="color: red">pls help me!</strong>'
+
+    # mail = email_service.create_mail(to=to, subject=subject, text=text, html=html)
+    # email_service.send_mail(mail)
+    print(email_service)
 
 
 if __name__ == '__main__':

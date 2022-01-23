@@ -25,8 +25,7 @@ def config():
             token.write(credentials.to_json())
 
     try:
-        print('Fetching service...')
+        print('Fetching Gmail service...')
         return build('gmail', 'v1', credentials=credentials)
     except HttpError as error:
-        # TODO - Handle errors from gmail API.
         print(f'error: {error}')

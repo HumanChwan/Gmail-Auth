@@ -1,14 +1,20 @@
+import base64
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from utils import parse_payload
+
 from typing import List, Optional
 from dict_types import Message, Payload, MessageReadable
-from utils import parse_payload
 
 
 class Email:
-    def __init__(self, service):
+    def __init__(self, service, sender):
         self._service = service
         self._users = self._service.users()
         self._messages = self._users.messages()
+
         self.userId = "me"
+        self.sender = sender
 
     def get_mail_content(self, count: int, q: Optional[str] = None) -> List[MessageReadable]:
         response = self._messages.list(userId=self.userId, maxResults=count, q=q).execute()
@@ -20,7 +26,30 @@ class Email:
         messages: List[MessageReadable] = [parse_payload(payload) for payload in payloads]
         return messages
 
+    def create_mail(self, **kwargs: str) -> object:
+        to = kwargs['to']
+        subject = kwargs['subject']
+        text = kwargs['text']
+        html = kwargs['html']
+
+        message = MIMEMultipart('alternative')
+
+        text_part = MIMEText(text, 'text')
+        html_part = MIMEText(html, 'html')
+
+        message['to'] = to
+        message['from'] = self.sender
+        message['subject'] = subject
+
+        message.attach(text_part)
+        message.attach(html_part)
+
+        return {'raw': base64.urlsafe_b64encode(bytes(message.as_string(), 'utf-8')).decode('utf-8')}
+
     def send_mail(self, message):
         message_out = self._messages.send(userId=self.userId, body=message).execute()
         print(f"Message id: {message_out['id']}")
         return message_out
+
+    def __str__(self):
+        return str({'sender': self.sender})

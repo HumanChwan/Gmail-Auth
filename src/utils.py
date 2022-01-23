@@ -1,14 +1,11 @@
 import base64
-from email.mime.text import MIMEText
 from typing import List
 
 from dict_types import MessageReadable, Payload, Body, MessageReadableKeys
 
 
 def readable(x: str) -> str:
-    parsed_in_bytes = base64.urlsafe_b64decode(x)
-    parsed_as_string = parsed_in_bytes.decode('utf-8')
-    return parsed_as_string
+    return base64.urlsafe_b64decode(x).decode('utf-8')
 
 
 def parse_payload(payload: Payload) -> MessageReadable:
@@ -35,14 +32,6 @@ def parse_payload(payload: Payload) -> MessageReadable:
                 break
 
     return message
-
-
-def create_mail(to: str, sender: str, subject: str, message_text: str) -> object:
-    message = MIMEText(message_text)
-    message['to'] = to
-    message['from'] = sender
-    message['subject'] = subject
-    return {'raw': base64.urlsafe_b64encode(bytes(message.as_string(), 'utf-8')).decode('utf-8')}
 
 
 def print_message(message: MessageReadable, index: int = 0):
