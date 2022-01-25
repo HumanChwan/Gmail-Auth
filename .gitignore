@@ -2,4 +2,5 @@ venv/
 credentials.json
 token.json
 test*
-__pycache__/
+__pycache__
+/dist/*
