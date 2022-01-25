@@ -1,10 +1,8 @@
-from config import config
-from mail_utils import Email
+from gmailauth import Email
 
 
 def main():
-    service = config()
-    email_service = Email(service, 'dinesss169@gmail.com')
+    email_service = Email('dinesss169@gmail.com')
 
     to = 'dinesss169@gmail.com'
     subject = 'kwargs testing'

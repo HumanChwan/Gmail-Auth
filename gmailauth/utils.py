@@ -1,7 +1,7 @@
 import base64
 from typing import List
 
-from dict_types import MessageReadable, Payload, Body, MessageReadableKeys
+from .dict_types import MessageReadable, Payload, Body, MessageReadableKeys
 
 
 def readable(x: str) -> str:

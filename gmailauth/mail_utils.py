@@ -1,15 +1,30 @@
 import base64
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from utils import parse_payload
-
 from typing import List, Optional
-from dict_types import Message, Payload, MessageReadable
+
+from .utils import parse_payload
+from .config import config
+from .dict_types import Message, Payload, MessageReadable
 
 
 class Email:
-    def __init__(self, service, sender):
-        self._service = service
+    """
+            Class Email\n
+            ------------
+            Initialize Email class object as:
+            \n
+            ``email_service = Email("email@email.com")``
+            methods:
+                get_email_content\n
+                create_mail\n
+                send_mail
+            Args
+            ----------
+            @sender: str (sender email address)
+        """
+    def __init__(self, sender: str):
+        self._service = config()
         self._users = self._service.users()
         self._messages = self._users.messages()
 
