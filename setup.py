@@ -7,6 +7,6 @@ setup(
     packages=['gmailauth'],
     author="Dinesh Chukkala",
     author_email="dineshchukkala169@gmail.com",
-    license='Gmail Integration for sending and reading emails.',
+    license='',
     long_description=open('README').read(),
 )
